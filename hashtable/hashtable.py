@@ -20,11 +20,12 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
-        # Your code here
+    def __init__(self, capacity = MIN_CAPACITY):
+        self.capacity = [None] * capacity
 
 
     def get_num_slots(self):
+
         """
         Return the length of the list you're using to hold the hash
         table data. (Not the number of items stored in the hash table,
@@ -34,7 +35,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return len(self.capacity)
 
 
     def get_load_factor(self):
@@ -62,7 +63,11 @@ class HashTable:
 
         Implement this, and/or FNV-1.
         """
-        # Your code here
+
+        hash = 5381
+        for c in key:
+            hash = (hash * 33) + ord(c)
+        return hash
 
 
     def hash_index(self, key):
@@ -71,7 +76,7 @@ class HashTable:
         between within the storage capacity of the hash table.
         """
         #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        return self.djb2(key) % len(self.capacity)
 
     def put(self, key, value):
         """
@@ -81,7 +86,11 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        i = self.hash_index(key)
+        self.capacity[i] = value
+
+
+
 
 
     def delete(self, key):
@@ -92,7 +101,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        i = self.hash_index(key)
+        self.capacity[i] = None
 
 
     def get(self, key):
@@ -103,7 +113,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        i = self.hash_index(key)
+        return self.capacity[i]
 
 
     def resize(self, new_capacity):
@@ -113,7 +124,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+
 
 
 
