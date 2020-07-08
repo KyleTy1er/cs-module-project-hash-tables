@@ -64,7 +64,7 @@ class HashTable:
 
     def get_num_slots(self):
 
-        return len(self.capacity)
+        return len(self.storage)
 
     def djb2(self, key):
         hash = 5381
@@ -96,8 +96,13 @@ class HashTable:
         if not self.storage[i]:
             return None
         else:
-            if self.storage[i].find_key(key) == key:
-                return self.storage[i].value
+            cur = self.storage[i]
+            while cur != None:
+                if cur.key == key:
+                    return cur.value
+                cur = cur.next
+
+            return None
 
     def get_load_factor(self):
         """
@@ -140,3 +145,17 @@ class HashTable:
             node = node.next
         self.elements -= 1
         return
+
+ht = HashTable(10)
+
+ht.put("key-0", "val-0")
+ht.put("key-1", "val-1")
+ht.put("key-2", "val-2")
+ht.put("key-3", "val-3")
+ht.put("key-4", "val-4")
+ht.put("key-5", "val-5")
+ht.put("key-6", "val-6")
+ht.put("key-7", "val-7")
+# failing here because of capacity?
+ht.put("key-8", "val-8")
+ht.put("key-9", "val-9")
