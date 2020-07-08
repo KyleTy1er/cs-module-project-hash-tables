@@ -1,3 +1,5 @@
+
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -6,10 +8,54 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
+        self.head = None
+
+    def find_val(self, value):
+        # start at the head
+        cur = self.head
+        while cur is not None:
+            if cur.value == value:
+                return cur.value
+            cur = cur.next
+        return None 
+    
+    def find_key(self, key):
+        cur = self.head
+        while cur is not None:
+            if cur.key == key:
+                return cur.key
+            cur = cur.next
+        return None
+        
+    
+    def insert_at_head(self, node):
+        n = node
+        # new value .next is current head
+        n.next = self.head
+        # current head is now set to n
+        self.head = n
+        
+    def delete(self, value):
+        cur = self.head
+        #Special Case of Deleting Head:
+        if cur.value == value: # are we deleting the head?
+            self.head = self.head.next
+            return cur
+        # General Case
+        prev = cur
+        cur = cur.next
+        while cur is not None:
+            if cur.value == value:
+                prev.next = cur.next # cuts out the node
+                return cur
+        else:
+            prev = prev.next
+            cur = cur.next
+            return None
 
 
 # Hash table can't have fewer than this many slots
-MIN_CAPACITY = 8
+# MIN_CAPACITY = 8
 
 
 class HashTable:
@@ -20,8 +66,15 @@ class HashTable:
     Implement this.
     """
 
+<<<<<<< Updated upstream
     def __init__(self, capacity):
         # Your code here
+=======
+    def __init__(self, capacity=8):
+        self.capacity = capacity
+        self.storage = [None] * capacity
+        self.elements = 0
+>>>>>>> Stashed changes
 
 
     def get_num_slots(self):
@@ -34,7 +87,11 @@ class HashTable:
 
         Implement this.
         """
+<<<<<<< Updated upstream
         # Your code here
+=======
+        return len(self.storage)
+>>>>>>> Stashed changes
 
 
     def get_load_factor(self):
@@ -43,7 +100,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.elements / self.capacity
 
 
     def fnv1(self, key):
@@ -71,7 +128,11 @@ class HashTable:
         between within the storage capacity of the hash table.
         """
         #return self.fnv1(key) % self.capacity
+<<<<<<< Updated upstream
         return self.djb2(key) % self.capacity
+=======
+        return self.djb2(key) % len(self.storage)
+>>>>>>> Stashed changes
 
     def put(self, key, value):
         """
@@ -81,7 +142,20 @@ class HashTable:
 
         Implement this.
         """
+<<<<<<< Updated upstream
         # Your code here
+=======
+        # need to account for if the key value is the same   
+
+        i = self.hash_index(key)
+        if not self.storage[i]:
+            hte = HashTableEntry(key, value)
+            self.storage[i] = hte
+            self.elements += 1
+            hte.head = HashTableEntry(key, value)
+        elif self.storage[i] and self.storage[i].key != key:
+            self.storage[i].insert_at_head(HashTableEntry(key, value))
+>>>>>>> Stashed changes
 
 
     def delete(self, key):
@@ -92,7 +166,25 @@ class HashTable:
 
         Implement this.
         """
+<<<<<<< Updated upstream
         # Your code here
+=======
+        i = self.hash_index(key)
+        node = self.storage[i]
+        prev = None
+        if node.key == key:
+            self.storage[i] = node.next
+            return
+        while node != None:
+            if node.key == key:
+                prev.next = node.next
+                self.storage[i].next = None
+                return
+            prev = node
+            node = node.next
+        self.elements -= 1
+        return
+>>>>>>> Stashed changes
 
 
     def get(self, key):
@@ -103,7 +195,18 @@ class HashTable:
 
         Implement this.
         """
+<<<<<<< Updated upstream
         # Your code here
+=======
+        # - find the index in the hash table for the key
+        i = self.hash_index(key)
+        # - search the list for that key
+        if not self.storage[i]:
+            return None
+        else:
+            if self.storage[i].find_key(key) == key:
+                return self.storage[i].value
+>>>>>>> Stashed changes
 
 
     def resize(self, new_capacity):
@@ -113,7 +216,21 @@ class HashTable:
 
         Implement this.
         """
+<<<<<<< Updated upstream
         # Your code here
+=======
+        prev_storage = self.storage
+        self.capacity = new_cap
+        self.storage = [None] * new_cap
+        for i in range(len(prev_storage)):
+            prev = prev_storage[i]
+            if prev:
+                while prev:
+                    if prev.key:
+                        self.put(prev.key, prev.value)
+                        prev = prev.next
+
+>>>>>>> Stashed changes
 
 
 
