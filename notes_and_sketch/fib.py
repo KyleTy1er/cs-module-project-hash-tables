@@ -1,8 +1,9 @@
 # 0 1 1 2 3 5 8 13 21
 
-# Memoization, caching
+# Memoization, caching, top-down dynamic programming
 
 def fib(n):
+
 	cache = {}
 
 	def fib_inner(n):
