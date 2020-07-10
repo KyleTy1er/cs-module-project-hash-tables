@@ -2,16 +2,19 @@
 
 
 def word_count(s):
-
+    ignored = "\":;,.-+=/\|[]{}()*^&?!"
     results = {}
 
-    translation_table = dict.fromkeys(map(ord, '"{:;,.-+=/|\[]}()*^&"'), None)
-
-    s = s.translate(translation_table)
-
-    print(s)
+    # translation_table = dict.fromkeys(map(ord, '"{:;,.-+=/|\[]}()*^&"'), None)
+    #
+    # s = s.translate(translation_table)
+    #
+    # print(s)
 
     if s:
+
+        for char in ignored:
+            s = s.replace(char, "")
 
         words = s.lower().split(' ')
         while '' in words:
@@ -44,14 +47,14 @@ def word_count(s):
 '''
 #
 if __name__ == "__main__":
-    # x = word_count("")
-    # print("expected outcome {}")
-    # print(f"Outcome: {x}")
-    #
-    #
-    # x = word_count("Hello    hello")
-    # print("expected outcome {""hello"": 2}")
-    # print(f"Outcome: {x}")
+    x = word_count("")
+    print("expected outcome {}")
+    print(f"Outcome: {x}")
+
+
+    x = word_count("Hello    hello")
+    print("expected outcome {""hello"": 2}")
+    print(f"Outcome: {x}")
     #
     # print("expected outcome {""hello"": 2}")
     # print(f"Outcome: {x}")
@@ -62,9 +65,9 @@ if __name__ == "__main__":
 
     # white_chars = [c for c in x.whitespace]
 
-    for i in x:
-        x[i] = str(x[i])
-        white_chars = [c for c in x[i].whitespace]
+    # for i in x:
+    #     x[i] = str(x[i])
+    #     white_chars = [c for c in x[i].whitespace]
 
     # x = (word_count(""))
     #
