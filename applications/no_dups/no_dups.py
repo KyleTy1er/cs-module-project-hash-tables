@@ -17,7 +17,7 @@ The solution must be `O(n)`.
 
 def no_dups(s):
 
-    huh = '""'
+    huh = ""
 
     if len(s) > 0:
 
@@ -30,6 +30,7 @@ def no_dups(s):
 
         Not_none_values = filter(None.__ne__, new_list)
         new_list = list(Not_none_values)
+        new_list = ' '.join(new_list)
 
         return new_list
 
@@ -40,11 +41,8 @@ def no_dups(s):
 
 
 if __name__ == "__main__":
-    x = no_dups("")
-    print(x)
-    x = no_dups("hello")
-    print(x)
-    # print(no_dups("hello hello"))
-    # print(no_dups("cats dogs fish cats dogs"))
-    # print(no_dups("spam spam spam eggs spam sausage spam spam and spam"))
-    # expected out put = ("spam eggs sausage and")
+    print(no_dups(""))
+    print(no_dups("hello"))
+    print(no_dups("hello hello"))
+    print(no_dups("cats dogs fish cats dogs"))
+    print(no_dups("spam spam spam eggs spam sausage spam spam and spam"))

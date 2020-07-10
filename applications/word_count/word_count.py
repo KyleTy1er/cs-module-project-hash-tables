@@ -5,9 +5,11 @@ def word_count(s):
 
     results = {}
 
-    translation_table = dict.fromkeys(map(ord, '"{:;,.-+=/|[]}()*^&"'), None)
+    translation_table = dict.fromkeys(map(ord, '"{:;,.-+=/|\[]}()*^&"'), None)
 
     s = s.translate(translation_table)
+
+    print(s)
 
     if s:
 
@@ -37,15 +39,32 @@ def word_count(s):
     # if letter is in dict remove it from array
 
 
-
-
 '''
 {'hello': 2, 'my': 2, 'cat': 2, 'and': 1, "doesn't": 1, 'say': 1, 'back': 1}
 '''
-
+#
 if __name__ == "__main__":
+    # x = word_count("")
+    # print("expected outcome {}")
+    # print(f"Outcome: {x}")
+    #
+    #
+    # x = word_count("Hello    hello")
+    # print("expected outcome {""hello"": 2}")
+    # print(f"Outcome: {x}")
+    #
+    # print("expected outcome {""hello"": 2}")
+    # print(f"Outcome: {x}")
 
-# this test not passing:
+    x = word_count('a a\ra\na\ta \t\r\n')
+    # print(f"expected outcome: "'a'": 5")
+    # print(f"Outcome: {x}")
+
+    # white_chars = [c for c in x.whitespace]
+
+    for i in x:
+        x[i] = str(x[i])
+        white_chars = [c for c in x[i].whitespace]
 
     # x = (word_count(""))
     #
