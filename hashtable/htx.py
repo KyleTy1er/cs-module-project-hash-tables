@@ -1,5 +1,5 @@
 
-# node
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -17,8 +17,8 @@ class HashTableEntry:
             if cur.value == value:
                 return cur.value
             cur = cur.next
-        return None
-
+        return None 
+    
     def find_key(self, key):
         cur = self.head
         while cur is not None:
@@ -26,18 +26,18 @@ class HashTableEntry:
                 return cur.key
             cur = cur.next
         return None
-
-
+        
+    
     def insert_at_head(self, node):
         n = node
         # new value .next is current head
         n.next = self.head
         # current head is now set to n
         self.head = n
-
+        
     def delete(self, value):
         cur = self.head
-        # Special Case of Deleting Head:
+        #Special Case of Deleting Head:
         if cur.value == value: # are we deleting the head?
             self.head = self.head.next
             return cur
@@ -54,10 +54,11 @@ class HashTableEntry:
             return None
 
 
+# Hash table can't have fewer than this many slots
+# MIN_CAPACITY = 8
+
+
 class HashTable:
-
-    MIN_CAPACITY = 10
-
     """
     A hash table that with `capacity` buckets
     that accepts string keys
@@ -66,14 +67,17 @@ class HashTable:
     """
 
 
-    def __init__(self, capacity=MIN_CAPACITY):
+    def __init__(self, capacity):
+        # Your code here
+
+    def __init__(self, capacity=8):
         self.capacity = capacity
         self.storage = [None] * capacity
         self.elements = 0
 
+
+
     def get_num_slots(self):
-
-
         """
         Return the length of the list you're using to hold the hash
         table data. (Not the number of items stored in the hash table,
@@ -82,56 +86,11 @@ class HashTable:
         One of the tests relies on this.
 
         Implement this.
-        """
+
+
         return len(self.storage)
 
-    def djb2(self, key):
 
-        """
-        DJB2 hash, 32-bit
-
-        Implement this, and/or FNV-1.
-        """
-
-        hash = 5381
-        for c in key:
-            hash = (hash * 33) + ord(c)
-        return hash
-
-
-    def hash_index(self, key):
-        return self.djb2(key) % len(self.storage)
-
-
-
-    def put(self, key, value):
-        i = self.hash_index(key)
-        if not self.storage[i]:
-            hte = HashTableEntry(key, value)
-            self.storage[i] = hte
-            self.elements += 1
-            hte.head = HashTableEntry(key, value)
-        # need to account for if the key value is the same
-        # how do I access the key value at this point?
-        if self.storage[i].key == key:
-            self.storage[i] = HashTableEntry(key, value)
-        elif self.storage[i]:
-            self.storage[i].insert_at_head(HashTableEntry(key, value))
-
-    def get(self, key):
-        # - find the index in the hash table for the key
-        i = self.hash_index(key)
-        # - search the list for that key
-        if not self.storage[i]:
-            return None
-        else:
-            cur = self.storage[i]
-            while cur != None:
-                if cur.key == key:
-                    return cur.value
-                cur = cur.next
-
-            return None
 
     def get_load_factor(self):
         """
@@ -139,27 +98,75 @@ class HashTable:
 
         Implement this.
         """
+        return self.elements / self.capacity
 
 
-    def resize(self, new_cap):
-        prev_storage = self.storage
-        self.capacity = new_cap
-        self.storage = [None] * new_cap
-        for i in range(len(prev_storage)):
-            prev = prev_storage[i]
-            if prev:
-                while prev:
-                    if prev.key:
-                        self.put(prev.key, prev.value)
-                        prev = prev.next
+    def fnv1(self, key):
+        """
+        FNV-1 Hash, 64-bit
+
+        Implement this, and/or DJB2.pyy
+        """
+
+        # Your code here
+
+
+    def djb2(self, key):
+        """
+        DJB2 hash, 32-bit
+
+        Implement this, and/or FNV-1.
+        """
+        # Your code here
+
+
+    def hash_index(self, key):
+        """
+        Take an arbitrary key and return a valid integer index
+        between within the storage capacity of the hash table.
+        """
+        #return self.fnv1(key) % self.capacity
+<<<<<<< Updated upstream
+        return self.djb2(key) % self.capacity
+=======
+        return self.djb2(key) % len(self.storage)
+>>>>>>> Stashed changes
+
+    def put(self, key, value):
+        """
+        Store the value with the given key.
+
+        Hash collisions should be handled with Linked List Chaining.
+
+        Implement this.
+        """
+<<<<<<< Updated upstream
+        # Your code here
+=======
+        # need to account for if the key value is the same   
+
+        i = self.hash_index(key)
+        if not self.storage[i]:
+            hte = HashTableEntry(key, value)
+            self.storage[i] = hte
+            self.elements += 1
+            hte.head = HashTableEntry(key, value)
+        elif self.storage[i] and self.storage[i].key != key:
+            self.storage[i].insert_at_head(HashTableEntry(key, value))
+>>>>>>> Stashed changes
+
 
     def delete(self, key):
         """
         Remove the value stored with the given key.
+
         Print a warning if the key is not found.
 
         Implement this.
         """
+<<<<<<< Updated upstream
+        # Your code here
+=======
         i = self.hash_index(key)
         node = self.storage[i]
         prev = None
@@ -175,26 +182,7 @@ class HashTable:
             node = node.next
         self.elements -= 1
         return
-
-ht = HashTable(10)
-
-ht.put("key-0", "val-0")
-ht.put("key-1", "val-1")
-ht.put("key-2", "val-2")
-ht.put("key-3", "val-3")
-ht.put("key-4", "val-4")
-ht.put("key-5", "val-5")
-ht.put("key-6", "val-6")
-ht.put("key-7", "val-7")
-# failing here because of capacity?
-ht.put("key-8", "val-8")
-ht.put("key-9", "val-9")
-
-
-        Implement this.
-        """
-        i = self.hash_index(key)
-        self.capacity[i] = None
+>>>>>>> Stashed changes
 
 
     def get(self, key):
@@ -205,8 +193,18 @@ ht.put("key-9", "val-9")
 
         Implement this.
         """
+<<<<<<< Updated upstream
+        # Your code here
+=======
+        # - find the index in the hash table for the key
         i = self.hash_index(key)
-        return self.capacity[i]
+        # - search the list for that key
+        if not self.storage[i]:
+            return None
+        else:
+            if self.storage[i].find_key(key) == key:
+                return self.storage[i].value
+>>>>>>> Stashed changes
 
 
     def resize(self, new_capacity):
@@ -216,7 +214,21 @@ ht.put("key-9", "val-9")
 
         Implement this.
         """
+<<<<<<< Updated upstream
+        # Your code here
+=======
+        prev_storage = self.storage
+        self.capacity = new_cap
+        self.storage = [None] * new_cap
+        for i in range(len(prev_storage)):
+            prev = prev_storage[i]
+            if prev:
+                while prev:
+                    if prev.key:
+                        self.put(prev.key, prev.value)
+                        prev = prev.next
 
+>>>>>>> Stashed changes
 
 
 
@@ -254,4 +266,3 @@ if __name__ == "__main__":
         print(ht.get(f"line_{i}"))
 
     print("")
-
